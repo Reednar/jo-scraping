@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart with Chart.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <canvas id="myChartAthlete" style="width: 100%; height: 500px;"></canvas>
+    <canvas id="myChartNation" style="width: 100%; height: 500px;"></canvas>
+    <canvas id="myChartSport" style="width: 100%; height: 500px;"></canvas>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const data1 = <%- JSON.stringify(data1) %>;
+
+            // Extraction des données pour le graphique
+            const labels = [];
+            const goldData = [];
+            const silverData = [];
+            const bronzeData = [];
+
+            data1.forEach(athlete => {
+                labels.push(`${athlete.firstname} ${athlete.lastname}`);
+                goldData.push(athlete.achievements.gold);
+                silverData.push(athlete.achievements.silver);
+                bronzeData.push(athlete.achievements.bronze);
+            });
+
+            // Création du graphique
+            const ctx = document.getElementById('myChartAthlete').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Médailles d\'or',
+                            data: goldData,
+                            backgroundColor: 'gold'
+                        },
+                        {
+                            label: 'Médailles d\'argent',
+                            data: silverData,
+                            backgroundColor: 'silver'
+                        },
+                        {
+                            label: 'Médailles de bronze',
+                            data: bronzeData,
+                            backgroundColor: 'peru'
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Médailles par athlète'
+                        }
+                    },
+                    responsive: true,
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    }
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const data2 = <%- JSON.stringify(data2) %>;
+
+            // Extraction des données pour le graphique
+            const countries = [];
+            const goldMedals = [];
+            const silverMedals = [];
+            const bronzeMedals = [];
+
+            data2.forEach(country => {
+                countries.push(country.nameCountry);
+                goldMedals.push(country.medalists.gold_medalist_count);
+                silverMedals.push(country.medalists.silver_medalist_count);
+                bronzeMedals.push(country.medalists.bronze_medalist_count);
+            });
+
+            // Création du graphique
+            const ctx2 = document.getElementById('myChartNation').getContext('2d');
+            const countryChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: countries,
+                    datasets: [
+                        {
+                            label: 'Médaillés d\'or',
+                            data: goldMedals,
+                            backgroundColor: 'gold'
+                        },
+                        {
+                            label: 'Médaillés d\'argent',
+                            data: silverMedals,
+                            backgroundColor: 'silver'
+                        },
+                        {
+                            label: 'Médaillés de bronze',
+                            data: bronzeMedals,
+                            backgroundColor: 'peru'
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Nombre de médaillés par pays'
+                        }
+                    },
+                    responsive: true,
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    }
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const data3 = <%- JSON.stringify(data3) %>;
+
+            // Extraction des données pour le graphique
+            const datasets = [];
+
+            data3.forEach(sport => {
+                const sportData = {
+                    label: sport.nameSport,
+                    data: [],
+                    backgroundColor: randomColor(),
+                    borderWidth: 1
+                };
+
+                sport.nations.forEach(nation => {
+                    sportData.data.push({
+                        x: `${sport.nameSport} - ${nation.nameCountry}`,
+                        y: [
+                            nation.medalCounts.gold,
+                            nation.medalCounts.silver,
+                            nation.medalCounts.bronze
+                        ]
+                    });
+                });
+
+                datasets.push(sportData);
+            });
+
+            // Création du graphique
+            const ctx3 = document.getElementById('myChartSport').getContext('2d');
+            const sportChart = new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    datasets: datasets
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Médailles par sport et par pays'
+                        }
+                    },
+                    responsive: true,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            ticks: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    }
+                }
+            });
+
+            // Fonction pour générer une couleur aléatoire
+            function randomColor() {
+                return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.5)`;
+            }
+        });
+    </script>
+</body>
+
+</html>
