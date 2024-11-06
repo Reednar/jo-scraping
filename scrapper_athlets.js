@@ -1,7 +1,7 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 import { exit } from 'process';
-const fs = require("fs");
+import fs from 'fs';
 
 let data = [];
 
