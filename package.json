@@ -1,6 +1,7 @@
 {
   "name": "jo-scraping",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "scapper.js",
   "scripts": {
