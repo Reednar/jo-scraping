@@ -1,7 +1,7 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
-import { exit } from 'process';
-import fs from 'fs';
+import axios from "axios";
+import cheerio from "cheerio";
+import { exit } from "process";
+import fs from "fs";
 
 let data = [];
 
@@ -15,7 +15,7 @@ async function writeDataToFile(data) {
   } catch (error) {
     console.error(
       "Une erreur est survenue lors de l'écriture des données :",
-      error
+      error,
     );
   }
 }
@@ -45,7 +45,7 @@ async function getAthleteLinks(url) {
   } catch (error) {
     console.error(
       "Une erreur est survenue lors de la récupération des liens des athlètes :",
-      error
+      error,
     );
     return [];
   }
@@ -81,7 +81,7 @@ async function getAthleteAchievements(url) {
   } catch (error) {
     console.error(
       "Une erreur est survenue lors de la récupération des réalisations de l'athlète :",
-      error
+      error,
     );
     return null;
   }
@@ -91,14 +91,14 @@ async function getAthleteAchievements(url) {
 async function scrapeAthletes() {
   try {
     const athleteLinks = await getAthleteLinks(
-      "https://olympics-statistics.com/olympic-athletes"
+      "https://olympics-statistics.com/olympic-athletes",
     );
     // Pour chaque lien, on récupère les réalisations de l'athlète
     for (const link of athleteLinks) {
       const athlete = await getAthleteAchievements(link);
       data.push(athlete);
       console.log(
-        `Les données de ${athlete.firstname} ${athlete.lastname} ont été enregistrées`
+        `Les données de ${athlete.firstname} ${athlete.lastname} ont été enregistrées`,
       );
       // Pause de 5 secondes entre chaque requête pour éviter les erreurs 429
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -108,7 +108,7 @@ async function scrapeAthletes() {
   } catch (error) {
     console.error(
       "Une erreur est survenue lors du scraping des athlètes :",
-      error
+      error,
     );
   }
 }
