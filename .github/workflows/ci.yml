@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Run ESLint for code quality check
-        run: npx eslint . --ext .js --max-warnings=0
+        run: npx eslint . .js --max-warnings=0
         # . = dossier courant, --ext .js = vérifier les fichiers JavaScript
         # --max-warnings=0 = échouer si des warnings sont détectés
 
