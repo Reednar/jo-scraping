@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
 const app = express();
-
+// add comment for test ci
 // Middleware pour servir les fichiers statiques (CSS, JS, etc.)
 app.use(express.static("public"));
 
