@@ -1,7 +1,7 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
-const { exit } = require("process");
-const fs = require("fs");
+import axios from "axios";
+import cheerio from "cheerio";
+import { exit } from "process";
+import fs from "fs";
 
 let data = [];
 
@@ -15,7 +15,7 @@ async function writeDataToFile(data) {
   } catch (error) {
     console.error(
       "Une erreur est survenue lors de l'écriture des données :",
-      error
+      error,
     );
   }
 }
@@ -44,7 +44,7 @@ async function getNationsLinks(url) {
   } catch (error) {
     console.error(
       "Une erreur est survenue lors de la récupération des liens des nations :",
-      error
+      error,
     );
     return [];
   }
@@ -115,7 +115,7 @@ async function getNationMedalists(url) {
   } catch (error) {
     console.error(
       "Une erreur est survenue lors de la récupération des médailles par athlète :",
-      error
+      error,
     );
     return null;
   }
@@ -124,7 +124,7 @@ async function getNationMedalists(url) {
 async function scrapeNations() {
   try {
     const nationLinks = await getNationsLinks(
-      "https://olympics-statistics.com/nations"
+      "https://olympics-statistics.com/nations",
     );
     // Pour chaque lien, on récupère les données de la nation
     for (const link of nationLinks) {
@@ -139,7 +139,7 @@ async function scrapeNations() {
   } catch (error) {
     console.error(
       "Une erreur est survenue lors du scraping des nations :",
-      error
+      error,
     );
   }
 }

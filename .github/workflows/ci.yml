@@ -16,18 +16,28 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install dependencies
         run: npm install
 
       - name: Run ESLint for code quality check
-        run: npx eslint . .js --max-warnings=0
-        # . = dossier courant, --ext .js = vérifier les fichiers JavaScript
+        run: npx eslint . --max-warnings=0
+        # . = dossier courant
         # --max-warnings=0 = échouer si des warnings sont détectés
 
       - name: Run Prettier for formatting check (optional)
         run: npx prettier --check .
 
-      - name: Run the application
-        run: npm run start
+      - name: Run the application in the background
+        run: npm run start &
+
+      - name: Wait for the server to be ready
+        run: sleep 5 # Attendre quelques secondes pour que le serveur démarre
+
+      - name: Test server response
+        run: curl http://localhost:3000 # Remplacez par une URL ou un test plus approprié
+
+      - name: Stop the server
+        run: kill $(lsof -t -i:3000) # Arrête le serveur
+
