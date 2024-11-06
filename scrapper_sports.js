@@ -1,6 +1,6 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
-const { exit } = require("process");
+import axios from 'axios';
+import cheerio from 'cheerio';
+import { exit } from 'process';
 const fs = require("fs");
 
 let data = [];

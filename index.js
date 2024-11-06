@@ -1,5 +1,5 @@
-const express = require('express');
-const fs = require('fs');
+import express from 'express';
+import fs from 'fs';
 const app = express();
 
 // Middleware pour servir les fichiers statiques (CSS, JS, etc.)
