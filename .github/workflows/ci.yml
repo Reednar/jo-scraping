@@ -6,7 +6,7 @@ on:
       - develop
 
 jobs:
-  build:
+  lint_and_build:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +20,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Run ESLint for code quality check
+        run: npx eslint . --ext .js --max-warnings=0
+        # . = dossier courant, --ext .js = vérifier les fichiers JavaScript
+        # --max-warnings=0 = échouer si des warnings sont détectés
+
+      - name: Run Prettier for formatting check (optional)
+        run: npx prettier --check .
 
       - name: Run the application
         run: npm run start
